@@ -1,0 +1,67 @@
+{% block title %}
+    <title>
+        Тестовое задание для курортной сети "Азовский
+    </title>
+{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('bundles/azovskytest/css/main.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/azovskytest/js/jquery-1.11.3.min.js') }}"></script>
+    {#Navigation Control#}
+    {#<script language="text/javascript" type="text/javascript" src="{{asset('bundles/plots/js/jquery.flot.navigationControl/jquery.flot.navigationControl.js')}}"></script>#}
+{% endblock %}
+{% block body %}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.button_get_summ').on('click', function() {
+                        if ($("#number_1").val().trim() == ""||$("#number_2").val().trim() == "") {
+                            alert("Пожалуйста введите все необходимые данные!");
+                            return;
+                        }
+                        if (!$.isNumeric($("#number_1").val().trim())||!$.isNumeric($("#number_2").val().trim())) {
+                            alert("Введены нечисловые данные!");
+                            return;
+                        }
+                        $("#sum_res").empty();
+                        var params = $("#get_summ").serializeArray();
+                        $.ajax({
+                           data: "params="+encodeURIComponent(JSON.stringify(params)),
+                           url:"Azovsky_summ",
+                           //contentType:"application/json;charset=UTF-8",
+                           type: "post",
+                           success: function(summ){
+                                if (summ!=="error") {
+                                    var res = JSON.parse(summ);
+                                    $("#sum_res").append(res);
+                                }
+                                else {
+                                    alert("Ошибка!");
+                                }
+                            }
+                        });
+                    });
+                });
+        </script>
+        <div id="graph">
+            
+        </div>
+        
+        <div class="table_form">
+            <form id="get_summ" method="post" action="#" target="_blank">
+                <label >Число 1</label>
+                <input id="number_1" type="text" name="number_1">
+                <label >Число 2</label>
+                <input id="number_2" type="text" name="number_2">
+            </form>
+            <div class="computate">
+                <button onclick="return false;" type="button" class="button_get_summ">Рассчитать сумму чисел</button>
+            </div>
+            <div id="res">
+                <br/>
+                <label>Сумма чисел:</label>
+                <label id="sum_res"></label>
+            </div>
+        </div>
+        {#чтобы теги не экранировались, используем модификатор raw#}            
+{% endblock %}

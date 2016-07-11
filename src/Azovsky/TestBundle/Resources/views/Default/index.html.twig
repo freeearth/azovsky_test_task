@@ -1,0 +1,12 @@
+<html>
+    
+    {#подключение бандла только в формате PlotsBundle:Default:имя_бандла#}
+    
+    {% include('Azovsky\TestBundle:Default:header.html.twig')%}
+    {% include('Azovsky\TestBundle:Default:summ.html.twig')%}
+    {% block header %}
+    {% endblock %}
+    <body>
+        {% block body %}{% endblock %}    
+    </body>
+</html>

@@ -1,0 +1,6 @@
+azovsky_test_homepage:
+    path:     /
+    defaults: { _controller: AzovskyTestBundle:Default:index }
+azovsky_summ:
+    path:     /Azovsky_summ
+    defaults: { _controller: AzovskyTestBundle:Default:summ}
